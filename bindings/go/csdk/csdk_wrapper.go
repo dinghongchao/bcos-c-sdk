@@ -24,6 +24,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"strconv"
 	"unsafe"
+	"errors"
 )
 
 type CSDK struct {
@@ -393,4 +394,40 @@ func (csdk *CSDK) SendTransaction(chanData *ChanData, to string, data string) {
 		return
 	}
 	C.bcos_sdk_destroy_keypair(key_pair)
+}
+
+
+func (csdk *CSDK) CreateSignedTransaction(groupId string, chainId string, to string, data string, privateKey string, blockNumber int64) (error, string) {
+    cPrivateKey := C.CString(privateKey)
+	cPrivateKeyLen := C.uint(len(privateKey))
+    cBlockNumber := C.int64_t(blockNumber)
+	cTo := C.CString(to)
+	cData := C.CString(data)
+	cNull := C.CString("")
+	cGroupId := C.CString(groupId)
+	cChainId := C.CString(chainId)
+	var tx_hash *C.char
+	var signed_tx *C.char
+	defer C.free(unsafe.Pointer(cTo))
+	defer C.free(unsafe.Pointer(cData))
+	defer C.free(unsafe.Pointer(cNull))
+	defer C.free(unsafe.Pointer(tx_hash))
+	defer C.free(unsafe.Pointer(signed_tx))
+	defer C.free(unsafe.Pointer(cPrivateKey))
+	defer C.free(unsafe.Pointer(cGroupId))
+	defer C.free(unsafe.Pointer(cChainId))
+
+	key_pair := C.bcos_sdk_create_keypair_by_private_key(0, unsafe.Pointer(cPrivateKey), cPrivateKeyLen)
+
+	C.bcos_sdk_create_signed_transaction(key_pair, cGroupId, cChainId, cTo, cData, cNull, cBlockNumber, 0, &tx_hash, &signed_tx)
+
+	if C.bcos_sdk_is_last_opr_success() == 0 {
+	    errMsg := C.GoString(C.bcos_sdk_get_last_error_msg())
+		logrus.Errorf("bcos_sdk_create_signed_transaction_with_signed_data failed, error: %s\n", errMsg)
+		C.bcos_sdk_destroy_keypair(key_pair)
+		return errors.New(errMsg), ""
+	}
+
+	C.bcos_sdk_destroy_keypair(key_pair)
+	return nil, C.GoString(&signed_tx))
 }

@@ -1,0 +1,21 @@
+"/Users/zowo/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=/Users/zowo/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/CLion.app/Contents/bin/ninja/mac/ninja" -G Ninja -S /Users/zowo/Work/GoWorkSpace/18Art/bcos-c-sdk -B /Users/zowo/Work/GoWorkSpace/18Art/bcos-c-sdk/cmake-build-debug
+-- [hunter] Initializing Hunter workspace (5d8365a327be260cf24d2b125a71ee7069aca28f)
+-- [hunter]   https://github.com/FISCO-BCOS/hunter/archive/2b5b25ecffaba74393740bf0b8758c4e8d9297cf.tar.gz
+-- [hunter]   -> /Users/zowo/.hunter/_Base/Download/Hunter/unknown/5d8365a
+
+[hunter ** INTERNAL **] Build project failed
+[hunter ** INTERNAL **] [Directory:/Users/zowo/Work/GoWorkSpace/18Art/bcos-c-sdk]
+
+------------------------------ ERROR ------------------------------
+    https://docs.hunter.sh/en/latest/reference/errors/error.internal.html
+-------------------------------------------------------------------
+
+CMake Error at cmake/HunterGate.cmake:87 (message):
+Call Stack (most recent call first):
+  cmake/HunterGate.cmake:97 (hunter_gate_error_page)
+  cmake/HunterGate.cmake:345 (hunter_gate_internal_error)
+  cmake/HunterGate.cmake:509 (hunter_gate_download)
+  CMakeLists.txt:59 (HunterGate)
+
+
+-- Configuring incomplete, errors occurred!
