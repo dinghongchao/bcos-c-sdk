@@ -397,7 +397,7 @@ func (csdk *CSDK) SendTransaction(chanData *ChanData, to string, data string) {
 }
 
 
-func (csdk *CSDK) CreateSignedTransaction(groupId string, chainId string, to string, data string, privateKey string, blockNumber int64) (error, string) {
+func CreateSignedTransaction(groupId string, chainId string, to string, data string, privateKey string, blockNumber int64) (error, string) {
     cPrivateKey := C.CString(privateKey)
 	cPrivateKeyLen := C.uint(len(privateKey))
     cBlockNumber := C.int64_t(blockNumber)
