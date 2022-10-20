@@ -429,5 +429,5 @@ func (csdk *CSDK) CreateSignedTransaction(groupId string, chainId string, to str
 	}
 
 	C.bcos_sdk_destroy_keypair(key_pair)
-	return nil, C.GoString(&signed_tx))
+	return nil, C.GoString(&signed_tx)
 }
