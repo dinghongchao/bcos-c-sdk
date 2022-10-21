@@ -81,7 +81,5 @@ func CreateSignedTransaction(groupId string, chainId string, to string, data str
 	}
 
 	C.bcos_sdk_destroy_keypair(key_pair)
-	p := signed_tx.getString()
-	defer C.free(unsafe.Pointer(p))
-	return nil, C.GoString(p)
+	return nil, C.GoString(signed_tx)
 }
