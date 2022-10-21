@@ -22,7 +22,6 @@ import "C"
 
 import (
 	"github.com/sirupsen/logrus"
-	"strconv"
 	"unsafe"
 	"errors"
 )
