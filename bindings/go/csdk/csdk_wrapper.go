@@ -49,13 +49,13 @@ const (
 )
 
 
-func CreateSignedTransaction(groupId string, chainId string, to string, data string, privateKey string, blockNumber int64) (error, string) {
+func CreateSignedTransaction(groupId string, chainId string, to string, data string, privateKey string, blockNumber int64, extraData string) (error, string) {
     cPrivateKey := C.CString(privateKey)
 	cPrivateKeyLen := C.uint(len(privateKey))
     cBlockNumber := C.int64_t(blockNumber)
 	cTo := C.CString(to)
 	cData := C.CString(data)
-	cNull := C.CString("")
+	cExtraData := C.CString(extraData)
 	cGroupId := C.CString(groupId)
 	cChainId := C.CString(chainId)
 	var tx_hash *C.char
@@ -71,7 +71,7 @@ func CreateSignedTransaction(groupId string, chainId string, to string, data str
 
 	key_pair := C.bcos_sdk_create_keypair_by_private_key(0, unsafe.Pointer(cPrivateKey), cPrivateKeyLen)
 
-	C.bcos_sdk_create_signed_transaction(key_pair, cGroupId, cChainId, cTo, cData, cNull, cBlockNumber, 0, &tx_hash, &signed_tx)
+	C.bcos_sdk_create_signed_transaction(key_pair, cGroupId, cChainId, cTo, cData, cExtraData, cBlockNumber, 0, &tx_hash, &signed_tx)
 
 	if C.bcos_sdk_is_last_opr_success() == 0 {
 	    errMsg := C.GoString(C.bcos_sdk_get_last_error_msg())
