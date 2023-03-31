@@ -554,7 +554,7 @@ func CreateSignedTransaction(groupId string, chainId string, to string, data str
 
 	if C.bcos_sdk_is_last_opr_success() == 0 {
 		C.bcos_sdk_destroy_keypair(key_pair)
-		return fmt.Errorf("bcos_sdk_create_signed_transaction, error: %s", C.GoString(C.bcos_sdk_get_last_error_msg()), "",""
+		return fmt.Errorf("bcos_sdk_create_signed_transaction, error: %s", C.GoString(C.bcos_sdk_get_last_error_msg())), "",""
 	}
 
 	C.bcos_sdk_destroy_keypair(key_pair)
