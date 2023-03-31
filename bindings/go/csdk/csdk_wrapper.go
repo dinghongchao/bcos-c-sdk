@@ -38,9 +38,9 @@ type CSDK struct {
 
 
 
-func CreateSignedTransaction(groupId string, chainId string, to string, data string, privateKey string, blockNumber int64, extraData string) (error, string, string) {
-    cPrivateKey := C.CString(privateKey)
-	cPrivateKeyLen := C.uint(len(privateKey))
+func CreateSignedTransaction(groupId string, chainId string, to string, data string, privateKey []byte, blockNumber int64, extraData string) (error, string, string) {
+    //cPrivateKey := C.(privateKey)
+	//cPrivateKeyLen := C.uint(len(privateKey))
     cBlockNumber := C.int64_t(blockNumber)
 	cTo := C.CString(to)
 	cData := C.CString(data)
@@ -58,7 +58,9 @@ func CreateSignedTransaction(groupId string, chainId string, to string, data str
 	defer C.free(unsafe.Pointer(cGroupId))
 	defer C.free(unsafe.Pointer(cChainId))
 
-	key_pair := C.bcos_sdk_create_keypair_by_private_key(0, unsafe.Pointer(cPrivateKey), cPrivateKeyLen)
+	//key_pair := C.bcos_sdk_create_keypair_by_private_key(0, unsafe.Pointer(cPrivateKey), cPrivateKeyLen)
+
+	key_pair := C.bcos_sdk_create_keypair_by_private_key(0, unsafe.Pointer(&privateKey[0]), C.uint(len(privateKey))
 
 	C.bcos_sdk_create_signed_transaction(key_pair, cGroupId, cChainId, cTo, cData, cExtraData, cBlockNumber, 0, &tx_hash, &signed_tx)
 
