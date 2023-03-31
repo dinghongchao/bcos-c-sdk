@@ -28,7 +28,6 @@ import (
 	"strings"
 	"time"
 	"unsafe"
-	"github.com/sirupsen/logrus"
 
 	cache "github.com/patrickmn/go-cache"
 )
@@ -554,10 +553,8 @@ func CreateSignedTransaction(groupId string, chainId string, to string, data str
 	C.bcos_sdk_create_signed_transaction(key_pair, cGroupId, cChainId, cTo, cData, cExtraData, cBlockNumber, 0, &tx_hash, &signed_tx)
 
 	if C.bcos_sdk_is_last_opr_success() == 0 {
-	    errMsg := C.GoString(C.bcos_sdk_get_last_error_msg())
-		logrus.Errorf("bcos_sdk_create_signed_transaction_with_signed_data failed, error: %s\n", errMsg)
 		C.bcos_sdk_destroy_keypair(key_pair)
-		return errors.New(errMsg), "",""
+		return fmt.Errorf("bcos_sdk_create_signed_transaction, error: %s", C.GoString(C.bcos_sdk_get_last_error_msg()), "",""
 	}
 
 	C.bcos_sdk_destroy_keypair(key_pair)
