@@ -60,7 +60,7 @@ func CreateSignedTransaction(groupId string, chainId string, to string, data str
 
 	//key_pair := C.bcos_sdk_create_keypair_by_private_key(0, unsafe.Pointer(cPrivateKey), cPrivateKeyLen)
 
-	key_pair := C.bcos_sdk_create_keypair_by_private_key(0, unsafe.Pointer(&privateKey[0]), C.uint(len(privateKey))
+	key_pair := C.bcos_sdk_create_keypair_by_private_key(0, unsafe.Pointer(&privateKey[0]), C.uint(len(privateKey)))
 
 	C.bcos_sdk_create_signed_transaction(key_pair, cGroupId, cChainId, cTo, cData, cExtraData, cBlockNumber, 0, &tx_hash, &signed_tx)
 
