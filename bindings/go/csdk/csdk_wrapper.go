@@ -54,7 +54,7 @@ func CreateSignedTransaction(groupId string, chainId string, to string, data str
 	defer C.free(unsafe.Pointer(cExtraData))
 	defer C.free(unsafe.Pointer(tx_hash))
 	defer C.free(unsafe.Pointer(signed_tx))
-	defer C.free(unsafe.Pointer(cPrivateKey))
+	//defer C.free(unsafe.Pointer(cPrivateKey))
 	defer C.free(unsafe.Pointer(cGroupId))
 	defer C.free(unsafe.Pointer(cChainId))
 
