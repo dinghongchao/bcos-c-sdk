@@ -28,6 +28,7 @@ import (
 	"strings"
 	"time"
 	"unsafe"
+	"github.com/sirupsen/logrus"
 
 	cache "github.com/patrickmn/go-cache"
 )
